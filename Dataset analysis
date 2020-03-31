@@ -30,5 +30,13 @@ non-iid论文数据集分析与相关实验说明
       data 4.1: MNIST和CIFAR-10，20个worker(论文中称作client），每一个属于4个cluster中的一个。
                 为了模拟不相容性,在每个cluster内使用“label-swap augmentation"方法，改变概率p(y|x)。    类型：数据不相容
 
-
+5.《Federated learing in non-iid data》
+      data 5.1: MNIST, CIFAR-10, KWS数据集（从Speech commands datasets中抽取10个关键字） 
+                采用“1-class non-iid”或“2-class non-iid”划分到10个worker/client                     类型：类别不平衡
+                
+      
+                
+      
+      
+      
 
