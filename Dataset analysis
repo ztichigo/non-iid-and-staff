@@ -34,7 +34,7 @@ non-iid论文数据集分析与相关实验说明
       data 5.1: MNIST, CIFAR-10, KWS数据集（从Speech commands datasets中抽取10个关键字） 
                 采用“1-class non-iid”或“2-class non-iid”划分到10个worker/client                     类型：类别不平衡
                 
-      
+      data 5.2: 同data 5.1, 不同之处是加入globally shared data（减小各个client的EMD）          
                 
       
       
