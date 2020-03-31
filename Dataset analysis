@@ -13,14 +13,15 @@ non-iid论文数据集分析与相关实验说明
                          参数alpha控制模型差异
                          参数beta控制样本差异                                                        类型：类别不平衡，样本不平衡，模型差异
                          
-  2.《Federated optimization in Hetergenous Networks》
+2.《Federated optimization in Hetergenous Networks》
 
-       data 2.1 同 data 1.1, 但用了1000个worker
-       
-       data 2.2 同 data 1.3, 合成数据
+      data 2.1 同 data 1.1, 但用了1000个worker
+      
+      data 2.2 同 data 1.3, 合成数据
 
-       data 2.3: FEMNIST数据集（62-class), Sentiment140数据集，The Complete works of William Shakespeare数据集    类型：类别不平衡，样本不平衡
+      data 2.3: FEMNIST数据集（62-class), Sentiment140数据集，The Complete works of William Shakespeare数据集    类型：类别不平衡，样本不平衡
                    
-                                     
+3.《The non-iid data quagmire of Decentralized machine learning》
+      data 3.1: CIFAR-10,ImageNet,LFW人脸数据集  均以label划分（为若干worker，论文中称作partition）    类型：类别不平衡
             
             
