@@ -22,6 +22,13 @@ non-iid论文数据集分析与相关实验说明
       data 2.3: FEMNIST数据集（62-class), Sentiment140数据集，The Complete works of William Shakespeare数据集    类型：类别不平衡，样本不平衡
                    
 3.《The non-iid data quagmire of Decentralized machine learning》
+
       data 3.1: CIFAR-10,ImageNet,LFW人脸数据集  均以label划分（为若干worker，论文中称作partition）    类型：类别不平衡
-            
-            
+                   
+4.《Clustered federated learning：Model-Agnostic Distributed Multi-Task OPtimization under privacy constraints》
+ 
+      data 4.1: MNIST和CIFAR-10，20个worker(论文中称作client），每一个属于4个cluster中的一个。
+                为了模拟不相容性,在每个cluster内使用“label-swap augmentation"方法，改变概率p(y|x)。    类型：数据不相容
+
+
+
