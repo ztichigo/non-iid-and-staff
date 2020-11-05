@@ -2,6 +2,7 @@ from __future__ import division
 
 import torch
 from torch.nn import Module
+import torch.distributed as dist
 from torch.nn.parameter import Parameter
 from torch.nn import functional as F
 from torch.nn import init
@@ -17,13 +18,15 @@ class _BatchNorm(Module):
                      'running_mean', 'running_var', 'num_batches_tracked']
 
     def __init__(self, num_features, eps=1e-5, momentum=0.1, affine=True,
-                 track_running_stats=True):
+                 track_running_stats=True,period=None):
         super(_BatchNorm, self).__init__()
         self.num_features = num_features
         self.eps = eps
         self.momentum = momentum
         self.affine = affine
         self.track_running_stats = track_running_stats
+        self.num_iterations=0
+        self.period=period
         if self.affine:
             self.weight = Parameter(torch.Tensor(num_features))
             self.bias = Parameter(torch.Tensor(num_features))
@@ -132,6 +135,11 @@ class _BatchNorm(Module):
                 if self.track_running_stats:
                     self.running_mean=(1-momentum)*running_mean+momentum*mean
                     self.running_var=(1-momentum)*running_var+momentum*var
+                    #synchronize mean and var across all workers
+                    self.num_iterations+=1
+                    if self.num_iterations%(80*self.period)==0:
+                        self.all_reduce_statistic()
+                    
             #normalize input with mean and std of the current mini-batch     ***
             if self.affine:
                 if len(size)==2:
@@ -175,6 +183,14 @@ class _BatchNorm(Module):
             training, momentum, eps, torch.backends.cudnn.enabled
         )
         '''
+    def all_reduce_statistic(self):
+        mean_k=self.running_mean.clone().detach()
+        dist.all_reduce(mean_k)
+        var_k=self.running_var.clone().detach()
+        var_dmean=var_k+(self.running_mean-mean_k)**2
+        dist.all_reduce(var_dmean)
+        self.running_mean=mean_k
+        self.running_var=var_dmean
 
     def extra_repr(self):
         return '{num_features}, eps={eps}, momentum={momentum}, affine={affine}, ' \
